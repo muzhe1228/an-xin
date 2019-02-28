@@ -1,7 +1,7 @@
-# an-xin
+# gupiao
 
 #### Description
-{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}
+vue + muse ui + axios 的移动端项目，主要是股票的展示和股票的关注，购买，和查询 
 
 #### Software Architecture
 Software architecture description
