@@ -1,38 +1,29 @@
 <template>
   <div id="app">
-    <van-nav-bar
-      left-text="返回"
-      right-text="按钮"
-      fixed
-      @click-left="onClickLeft"
-      @click-right="onClickRight"
-    >
-      <img src="./assets/logo.png" slot="title" alt>
-    </van-nav-bar>
+    <router-view name="mainheader"></router-view>
+    <main class="mainWrap">
+      <router-view></router-view>
 
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-    </div>
-    <van-button @click="show2 = true;">{{btnText}}</van-button>
-
-    <van-popup v-model="show2" position="bottom">
-      <van-picker
-        show-toolbar
-        :columns="columns"
-        @confirm="yes"
-        @cancel="show2 = false"
-        @change="onChange"
-      />
-    </van-popup>
+      <!-- <van-button @click="show2 = true;">{{btnText}}</van-button>
+      <van-popup v-model="show2" position="bottom">
+        <van-picker
+          show-toolbar
+          :columns="columns"
+          @confirm="yes"
+          @cancel="show2 = false"
+          @change="onChange"
+        />
+      </van-popup>-->
+    </main>
     <!-- <router-view/> -->
-    <Footer></Footer>
+    <router-view name="mainfooter"></router-view>
   </div>
 </template>
 <script>
+import Header from "components/Header";
 import Footer from "components/Footer";
 import { mapState } from "vuex";
-import { Button, Popup, Picker, NavBar } from "vant";
+import { Button, Popup, Picker } from "vant";
 export default {
   data() {
     return {
@@ -50,10 +41,10 @@ export default {
   },
   components: {
     Footer,
+    Header,
     [Button.name]: Button,
     [Popup.name]: Popup,
-    [Picker.name]: Picker,
-    [NavBar.name]: NavBar
+    [Picker.name]: Picker
   },
   methods: {
     onClickLeft() {
@@ -95,32 +86,17 @@ export default {
 
 <style lang="less">
 #app {
-  height: 800px;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  background-color: red;
-  padding-bottom: 50px;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-  font-size: 0.24rem;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-.van-nav-bar__title {
-  img {
-    width: 32px;
-    vertical-align: middle;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  .mainWrap {
+    width: 100%;
+    padding: 46px 0 50px 0;
+    height: 1000px;
+    h1 {
+      font-size: 20px;
+      color: palevioletred;
+    }
   }
 }
 </style>

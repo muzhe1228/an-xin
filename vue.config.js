@@ -4,11 +4,11 @@ const IS_PROD = ["production", "prod"].includes(process.env.NODE_ENV);
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const glob = require("glob-all");
-const autoprefixer = require('autoprefixer');
-const pxtorem = require('postcss-pxtorem');
+const autoprefixer = require("autoprefixer");
+const pxtorem = require("postcss-pxtorem");
 module.exports = {
   outputDir: "./build",
-//   publicPath: process.env.NODE_ENV === "production" ? "/vant-demo/" : "/",
+  //   publicPath: process.env.NODE_ENV === "production" ? "/vant-demo/" : "/",
   publicPath: "./",
   chainWebpack: config => {
     // 添加别名
@@ -20,7 +20,7 @@ module.exports = {
       .set("components", resolve("src/components"))
       .set("layout", resolve("src/layout"))
       .set("views", resolve("src/views"))
-      .set("static", resolve("src/static"))
+      .set("static", resolve("src/static"));
   },
   css: {
     loaderOptions: {
@@ -35,10 +35,7 @@ module.exports = {
       },
       less: {
         modifyVars: {
-          red: "#debd63",
-          blue: "#debd63",
-          orange: "#debd63",
-          "text-color": "#debd63"
+          "text-color": "#454545"
         }
       }
     }
