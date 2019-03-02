@@ -2,7 +2,9 @@
   <div id="app">
     <router-view name="mainheader"></router-view>
     <main class="mainWrap">
-      <router-view></router-view>
+      <transition name="transitionRouter">
+        <router-view></router-view>
+      </transition>
 
       <!-- <van-button @click="show2 = true;">{{btnText}}</van-button>
       <van-popup v-model="show2" position="bottom">
@@ -100,6 +102,15 @@ export default {
       font-size: 20px;
       color: palevioletred;
     }
+  }
+  .transitionRouter-enter-active,
+  .transitionRouter-leave-active {
+    transition: all 0.4s;
+  }
+
+  .transitionRouter-enter,
+  .transitionRouter-leave {
+    transform: translate3d(100%, 0, 0);
   }
 }
 </style>
