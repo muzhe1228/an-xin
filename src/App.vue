@@ -39,7 +39,7 @@ export default {
     ...mapState(["WS"])
   },
   mounted() {
-    this.onMsg();
+    // this.onMsg();
   },
   components: {
     Footer,

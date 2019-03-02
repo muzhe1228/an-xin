@@ -14,21 +14,38 @@
         <h2>差点</h2>
         <h2>操作</h2>
       </div>
+      <!-- private String stock_code;//股票编码
+	private String stock_pinyin_name;//名称拼音
+	private String stock_name;//股票名字
+	private String stock_min_link;//股票分时线
+	private String stock_day_link;//股票日K线图
+	private String stock_week_link;//周K线图
+	private String stock_month_link;//月K线图
+	private String stock_type;//股票类型sz 深圳 2 sh
+	private Integer stock_del;//是否可用 0 是 1 否
+	private Double stock_open_price;//开盘价
+	private Double stock_current_price;//当前价
+	private Double stock_highest_price;//当日最高价
+	private Double stock_history_highest_price;//历史最高价
+	private Double stock_lowest_price;//当日最低价
+	private Double stock_history_lowest_price;//历史最低价
+	private Double stock_total_deal;//成交总量 手为单位  一手等于100股
+      private Double stock_total_deal_money;//成交总额 万元为单位-->
       <div class="info">
-        <ul class="info_single" v-for="(item,index) in List" :key="index">
+        <ul class="info_single" v-for="item in List" :key="item.stock_code">
           <li>
-            <p>名称大萨达</p>
-            <p>20190302</p>
+            <p>{{item.stock_name}}</p>
+            <p>{{item.stock_code}}</p>
           </li>
-          <li :class="isRed(index)">13.14</li>
-          <li :class="isRed(index)">{{item}}5.20%</li>
-          <li class="text_blue">正常</li>
+          <li :class="isRed(item.stock_del)">{{item.stock_current_price|isNull}}</li>
+          <li :class="isRed(item.stock_del)">5.20%</li>
+          <li class="text_blue">{{item.stock_del|isNormal}}</li>
           <li>0%</li>
           <li>加入自选</li>
         </ul>
       </div>
       <div class="pageWrap">
-        <p class="pageWrapAll">{{currentPage}}/13</p>
+        <p class="pageWrapAll">{{pageList.pageNo}}/{{pageList.pageCount}}</p>
         <van-pagination
           v-model="currentPage"
           :total-items="125"
@@ -42,16 +59,38 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       currentPage: 1,
       search: "",
-      List: new Array(20)
+      List: [],
+      pageList: {}
     };
   },
   components: {},
+  mounted() {
+    this.getList();
+  },
   methods: {
+    getList() {
+      this.$ajax({
+        url: "/zongcai/stock/getAllStock",
+        data: {
+          params: {
+            stockMsg: {
+              pageNo: 1,
+              pageSize: 20
+            }
+          }
+        }
+      }).then(res => {
+        this.List = res.stockMsgList;
+        this.pageList = res.stockMsg;
+        console.log(res);
+      });
+    },
     isRed(index) {
       if (index % 2) {
         return "text_red";
