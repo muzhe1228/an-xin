@@ -1,9 +1,15 @@
 <template>
   <div class="home">
     <div class="home_controller">
-      <input class="searchInp" type="text" v-model="search" placeholder="代码/名称/拼音">
-      <van-button class="searchBtn" size="mini">查询</van-button>
-      <van-button class="showAll" size="mini">显示全部</van-button>
+      <input
+        class="searchInp"
+        type="text"
+        v-model="searchVal"
+        @change="searchChange"
+        placeholder="代码/名称/拼音"
+      >
+      <van-button class="searchBtn" size="mini" @click="searchHanle(searchVal)">查询</van-button>
+      <van-button class="showAll" size="mini" @click="selectCont = true;">{{selectValue}}</van-button>
     </div>
     <div class="home_wrap">
       <div class="title">
@@ -14,23 +20,6 @@
         <h2>差点</h2>
         <h2>操作</h2>
       </div>
-      <!-- private String stock_code;//股票编码
-	private String stock_pinyin_name;//名称拼音
-	private String stock_name;//股票名字
-	private String stock_min_link;//股票分时线
-	private String stock_day_link;//股票日K线图
-	private String stock_week_link;//周K线图
-	private String stock_month_link;//月K线图
-	private String stock_type;//股票类型sz 深圳 2 sh
-	private Integer stock_del;//是否可用 0 是 1 否
-	private Double stock_open_price;//开盘价
-	private Double stock_current_price;//当前价
-	private Double stock_highest_price;//当日最高价
-	private Double stock_history_highest_price;//历史最高价
-	private Double stock_lowest_price;//当日最低价
-	private Double stock_history_lowest_price;//历史最低价
-	private Double stock_total_deal;//成交总量 手为单位  一手等于100股
-      private Double stock_total_deal_money;//成交总额 万元为单位-->
       <div class="info">
         <ul class="info_single" v-for="item in List" :key="item.stock_code">
           <li>
@@ -44,17 +33,27 @@
           <li>加入自选</li>
         </ul>
       </div>
-      <div class="pageWrap">
+      <div class="pageWrap" v-if="pageList.pageCount>1">
         <p class="pageWrapAll">{{pageList.pageNo}}/{{pageList.pageCount}}</p>
         <van-pagination
-          v-model="currentPage"
-          :total-items="125"
-          :items-per-page="10"
+          v-model="req.pageNo"
+          :total-items="pageList.totalCount"
+          :items-per-page="pageList.pageSize"
           :show-page-size="4"
           force-ellipses
+          @change="pageChange"
         />
       </div>
     </div>
+    <van-popup v-model="selectCont" position="bottom">
+      <van-picker
+        show-toolbar
+        :columns="selectList"
+        @confirm="checkOk"
+        @cancel="selectCont = false"
+        visible-item-count="3"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -63,33 +62,72 @@ import axios from "axios";
 export default {
   data() {
     return {
-      currentPage: 1,
-      search: "",
+      searchVal: null,
       List: [],
-      pageList: {}
+      pageList: {},
+      selectValue: "显示全部",
+      selectCont: false,
+      selectList: ["显示全部", "上海股", "深圳股"],
+      req: {
+        pageNo: 1,
+        pageSize: 20,
+        stock_type: null,
+        stock_select: null
+      }
     };
   },
   components: {},
   mounted() {
-    this.getList();
+    this.init();
   },
   methods: {
+    init() {
+      this.getList();
+    },
+    checkOk(value, index) {
+      if (this.selectValue != value) {
+        this.req.pageNo = 1;
+        if (index == 1) {
+          this.req.stock_type = "sh";
+        } else if (index == 2) {
+          this.req.stock_type = "sz";
+        } else {
+          this.req.stock_type = null;
+        }
+        this.getList();
+      }
+      this.selectValue = value;
+      this.selectCont = false;
+    },
     getList() {
       this.$ajax({
         url: "/zongcai/stock/getAllStock",
         data: {
-          params: {
-            stockMsg: {
-              pageNo: 1,
-              pageSize: 20
-            }
-          }
+          params: this.req
         }
       }).then(res => {
         this.List = res.stockMsgList;
         this.pageList = res.stockMsg;
-        console.log(res);
+        // console.log(res);
       });
+    },
+    searchHanle(val) {
+      console.log(val);
+      if (val) {
+        this.req.pageNo = 1;
+        this.req.stock_type = null;
+        this.req.stock_select = val;
+      } else {
+        this.req.stock_select = null;
+      }
+      this.getList();
+    },
+    searchChange(val) {
+      console.log(val);
+    },
+    pageChange(pageNo) {
+      this.req.pageNo = pageNo;
+      this.getList();
     },
     isRed(index) {
       if (index % 2) {
