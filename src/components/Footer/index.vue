@@ -32,6 +32,19 @@ export default {
 @import "~assets/less/comm.less";
 
 .van-tabbar {
-  background-color: @bMain;
+  background-color: @mainSbg;
+  border: none;
+  &::after {
+    border-color: transparent;
+  }
+  &-item {
+    color: @write;
+    transition: all 0.2s ease;
+  }
+  &-item--active {
+    color: @lineH;
+    transform: scale(1.1, 1.1);
+    // background-color: @mainBg;
+  }
 }
 </style>

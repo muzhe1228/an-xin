@@ -1,3 +1,4 @@
+@import "./comm.less";
 * {
   list-style: none;
   text-decoration: none;
@@ -7,6 +8,7 @@
   outline: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 11px;
 }
 
 body {
@@ -22,4 +24,33 @@ body {
 
 input {
   -webkit-appearance: none;
+  .placeholderColor(@placeholder);
+}
+
+@font-face {
+  font-family: "iconfont"; /* project id 1067508 */
+  src: url("//at.alicdn.com/t/font_1067508_oyr4g2n485.eot");
+  src: url("//at.alicdn.com/t/font_1067508_oyr4g2n485.eot?#iefix")
+      format("embedded-opentype"),
+    url("//at.alicdn.com/t/font_1067508_oyr4g2n485.woff2") format("woff2"),
+    url("//at.alicdn.com/t/font_1067508_oyr4g2n485.woff") format("woff"),
+    url("//at.alicdn.com/t/font_1067508_oyr4g2n485.ttf") format("truetype"),
+    url("//at.alicdn.com/t/font_1067508_oyr4g2n485.svg#iconfont") format("svg");
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.text_red {
+  color: @red;
+}
+.text_green {
+  color: @green;
+}
+.text_blue {
+  color: @blue;
 }

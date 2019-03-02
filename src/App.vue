@@ -85,14 +85,17 @@ export default {
 </script>
 
 <style lang="less">
+@import "~assets/less/comm.less";
 #app {
   height: 100vh;
   width: 100vw;
+
   display: flex;
+  flex-direction: column;
   .mainWrap {
+    background-color: @mainBg;
+    flex: 1;
     width: 100%;
-    padding: 46px 0 50px 0;
-    height: 1000px;
     h1 {
       font-size: 20px;
       color: palevioletred;

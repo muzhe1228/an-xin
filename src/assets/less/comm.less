@@ -1,5 +1,31 @@
 @main: #0d223a;
-@bMain: #debd63;
-@mColor: #454545;
-@sColor: #666;
-@borderColor: #9b9b9b;
+@mainBg: #123053;
+@mainSbg: #0d223a;
+@black: #111;
+@write: #eeeeee;
+@placeholder: #f7f7f7;
+@green: #056818;
+@red: #ff0000;
+@blue: #01daeb;
+@border: #a1a1a1;
+@border1: #929292;
+@shadow: #040d19;
+@lineH: #debd63;
+
+.placeholderColor(@color) {
+  &::-webkit-input-placeholder {
+    color: @arguments;
+  }
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: @arguments;
+  }
+  &::-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: @arguments;
+  }
+  &::-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: @arguments;
+  }
+}
