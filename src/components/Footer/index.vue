@@ -39,7 +39,7 @@ export default {
   }
   &-item {
     color: @write;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
   }
   &-item--active {
     color: @lineH;
