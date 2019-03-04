@@ -12,6 +12,7 @@
     "element-ui": "^2.6.1",
     "vant": "^1.6.1",
     "vue": "^2.6.2",
+    "vue-easytable": "^1.7.2",
     "vue-router": "^3.0.1",
     "vue-table2": "^1.0.4",
     "vuex": "^3.0.1"

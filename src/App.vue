@@ -5,7 +5,6 @@
       <transition name="transitionRouter">
         <router-view></router-view>
       </transition>
-<el-checkbox v-model="checked">备选项</el-checkbox>
       <!-- <van-button @click="show2 = true;">{{btnText}}</van-button>
       <van-popup v-model="show2" position="bottom">
         <van-picker
@@ -29,7 +28,6 @@ import { Button, Popup, Picker } from "vant";
 export default {
   data() {
     return {
-        checked: false,
       show2: false,
       active: 0,
       columns: ["杭州", "宁波", "温州", "嘉兴", "湖州"],

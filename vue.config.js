@@ -9,6 +9,7 @@ const pxtorem = require("postcss-pxtorem");
 module.exports = {
   outputDir: "./build",
   //   publicPath: process.env.NODE_ENV === "production" ? "/vant-demo/" : "/",
+  runtimeCompiler: true,
   publicPath: "./",
   chainWebpack: config => {
     // 添加别名
