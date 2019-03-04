@@ -17,7 +17,7 @@
         <input type="text" placeholder="请输入图形验证码">
       </div>
       <div class="btnGroup">
-        <van-button class="loginBtn" size="mini">登录</van-button>
+        <van-button class="loginBtn" @click="login" size="mini">登录</van-button>
         <van-button class="Register" size="mini">注册</van-button>
       </div>
     </div>
@@ -31,7 +31,22 @@ export default {
     return {};
   },
   components: {},
-  methods: {}
+  methods: {
+    login() {
+      this.$http
+        .post({
+          url: "/account/doBuyerLogin",
+          data: {
+            buyerLoginName: "lian",
+            buyerLoginPwd: 123456
+          }
+        })
+        .then(res => {
+          console.log(res);
+          this.$router.push("/");
+        });
+    }
+  }
 };
 </script>
 

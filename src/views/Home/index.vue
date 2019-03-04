@@ -30,7 +30,7 @@
           <li :class="isRed(item.stock_del)">5.20%</li>
           <li class="text_blue">{{item.stock_del|isNormal}}</li>
           <li>0%</li>
-          <li>加入自选</li>
+          <li @click="addBuyer(item.stock_code)">加入自选</li>
         </ul>
       </div>
       <div class="pageWrap" v-if="pageList.pageCount>1">
@@ -43,6 +43,15 @@
           force-ellipses
           @change="pageChange"
         />
+        <!-- <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage3"
+          :page-size="100"
+          layout="prev, pager, next, jumper"
+          :total="1000"
+        ></el-pagination> -->
+        <!-- <el-pagination layout="prev, pager, next" :total="pageList.totalCount" :page-size="20" pager-count="5"></el-pagination> -->
       </div>
     </div>
     <van-popup v-model="selectCont" position="bottom">
@@ -100,16 +109,33 @@ export default {
       this.selectCont = false;
     },
     getList() {
-      this.$ajax({
-        url: "/zongcai/stock/getAllStock",
-        data: {
-          params: this.req
-        }
-      }).then(res => {
-        this.List = res.stockMsgList;
-        this.pageList = res.stockMsg;
-        // console.log(res);
-      });
+      this.$http
+        .postData({
+          url: "/stock/getAllStock",
+          data: {
+            params: this.req
+          }
+        })
+        .then(res => {
+          console.log(res.stockMsgList);
+          this.List = res.stockMsgList;
+          this.pageList = res.stockMsg;
+          // console.log(res);
+        });
+    },
+    //添加自选
+    addBuyer(code) {
+      this.$http
+        .post({
+          url: "/stock/addBuyerStockList",
+          data: {
+            stock_code: code,
+            buyer_id: 2
+          }
+        })
+        .then(res => {
+          this.$toast.success("添加自选成功");
+        });
     },
     searchHanle(val) {
       console.log(val);

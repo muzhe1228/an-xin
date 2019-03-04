@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Ajax from "./Api";
+import Ajax, { http } from "./Api";
 // import { lStore, sStore } from "./func";
 // Vue.prototype.$lStore = lStore;
 // Vue.prototype.$sStore = sStore;
@@ -21,5 +21,6 @@ function isNormal(type) {
   }
 }
 Vue.prototype.$ajax = Ajax;
+Vue.prototype.$http = new http();
 Vue.filter("isNormal", isNormal);
 Vue.filter("isNull", isNull);

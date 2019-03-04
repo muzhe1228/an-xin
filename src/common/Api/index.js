@@ -22,23 +22,100 @@ const ajax = function(options) {
             resolve(res);
           }
         } else {
-          reject(response.data);
+          reject(response);
         }
       })
       .catch(err => {
-        if (err.response) {
-          if (err.response.data.code === 10010002) {
-          } else if (err.response.data.code === 500) {
-            console.log("网络异常，请稍后再试");
-          } else if (err.response.data.code > 0) {
-            console.log(`${err.response.data.message}`);
-          } else {
-            console.log("接口错误信息", err.response.data.message);
-          }
-        }
-        reject(err);
+        reject(err.data);
       });
   });
 };
+class http {
+  constructor(props) {
+    this.baseApi = ENV.getENV().httpApi;
+  }
+  get(options) {
+    let params = options.data || "";
+    return new Promise((resolve, reject) => {
+      axios({
+        url: options.url,
+        method: "get",
+        baseURL: this.baseApi,
+        timeout: 50000,
+        params: params
+      })
+        .then(response => {
+          if (response.status === 200) {
+            let res = response.data;
+            if (res.code == 0) {
+              resolve(res.result);
+            } else {
+              resolve(res);
+            }
+          } else {
+            reject(response);
+          }
+        })
+        .catch(err => {
+          reject(err.data);
+        });
+    });
+  }
+  post(options) {
+    let params = options.data || "";
+    return new Promise((resolve, reject) => {
+      axios({
+        url: options.url,
+        method: "post",
+        baseURL: this.baseApi,
+        timeout: 50000,
+        params: params
+      })
+        .then(response => {
+          if (response.status === 200) {
+            let res = response.data;
+            if (res.code == 0) {
+              resolve(res.result);
+            } else {
+              resolve(res);
+            }
+          } else {
+            reject(response);
+          }
+        })
+        .catch(err => {
+          reject(err.data);
+        });
+    });
+  }
+  postData(options) {
+    let params = options.data ? options.data.params : "";
+    return new Promise((resolve, reject) => {
+      axios({
+        url: options.url,
+        method: "post",
+        baseURL: this.baseApi,
+        timeout: 50000,
+        data: params
+      })
+        .then(response => {
+          if (response.status === 200) {
+            let res = response.data;
+            if (res.code == 0) {
+              resolve(res.result);
+            } else {
+              resolve(res);
+            }
+          } else {
+            reject(response);
+          }
+        })
+        .catch(err => {
+          reject(err.data);
+        });
+    });
+  }
+}
 
+export { http };
 export default ajax;
