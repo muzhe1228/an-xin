@@ -24,3 +24,32 @@ Vue.prototype.$ajax = Ajax;
 Vue.prototype.$http = new http();
 Vue.filter("isNormal", isNormal);
 Vue.filter("isNull", isNull);
+
+// 自定义列组件
+Vue.component("table-operation", {
+    template: `<span>sadssad</span>`,
+    props: {
+      rowData: {
+        type: Object
+      },
+      field: {
+        type: String
+      },
+      index: {
+        type: Number
+      }
+    },
+    methods: {
+      update() {
+        // 参数根据业务场景随意构造
+        let params = { type: "edit", index: this.index, rowData: this.rowData };
+        this.$emit("on-custom-comp", params);
+      },
+  
+      deleteRow() {
+        // 参数根据业务场景随意构造
+        let params = { type: "delete", index: this.index };
+        this.$emit("on-custom-comp", params);
+      }
+    }
+  });

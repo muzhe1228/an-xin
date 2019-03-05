@@ -1,13 +1,21 @@
 <template>
-  <v-table
-    is-horizontal-resize
-    style="width:100%"
-    :columns="columns"
-    :table-data="tableData"
-    row-hover-color="#eee"
-    row-click-color="#edf7ff"
-    @on-custom-comp="customCompFunc"
-  ></v-table>
+  <div class="position">
+    <v-table
+      is-horizontal-resize
+      is-vertical-resize
+      style="width:100%"
+      :columns="columns"
+      :table-data="tableData"
+      row-hover-color="#eee"
+      row-click-color="#edf7ff"
+      :show-vertical-border="false"
+      :show-horizontal-border="false"
+      even-bg-color="#0d223a"
+      table-bg-color="#123053"
+      title-bg-color="#0d223a"
+      @on-custom-comp="customCompFunc"
+    ></v-table>
+  </div>
 </template>
 
 
@@ -35,6 +43,84 @@ export default {
           tel: "161*****0097",
           hobby: "钢琴、书法、唱歌",
           address: "上海市崇明县城桥镇八一路739号"
+        },
+        {
+          name: "周伟",
+          tel: "197*****1123",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市青浦区青浦镇章浜路24号"
+        },
+        {
+          name: "吴伟",
+          tel: "183*****6678",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市松江区乐都西路867-871号"
+        },
+        {
+          name: "周伟",
+          tel: "197*****1123",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市青浦区青浦镇章浜路24号"
+        },
+        {
+          name: "吴伟",
+          tel: "183*****6678",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市松江区乐都西路867-871号"
+        },
+        {
+          name: "李伟",
+          tel: "182*****1538",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市奉贤区南桥镇立新路12号2楼"
+        },
+        {
+          name: "孙伟",
+          tel: "161*****0097",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市崇明县城桥镇八一路739号"
+        },
+        {
+          name: "周伟",
+          tel: "197*****1123",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市青浦区青浦镇章浜路24号"
+        },
+        {
+          name: "吴伟",
+          tel: "183*****6678",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市松江区乐都西路867-871号"
+        },
+        {
+          name: "周伟",
+          tel: "197*****1123",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市青浦区青浦镇章浜路24号"
+        },
+        {
+          name: "吴伟",
+          tel: "183*****6678",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市松江区乐都西路867-871号"
+        },
+        {
+          name: "孙伟",
+          tel: "161*****0097",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市崇明县城桥镇八一路739号"
+        },
+        {
+          name: "周伟",
+          tel: "197*****1123",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市青浦区青浦镇章浜路24号"
+        },
+        {
+          name: "吴伟",
+          tel: "183*****6678",
+          hobby: "钢琴、书法、唱歌",
+          address: "上海市松江区乐都西路867-871号"
         },
         {
           name: "周伟",
@@ -126,36 +212,10 @@ export default {
     }
   }
 };
-
-// 自定义列组件
-Vue.component("table-operation", {
-  template: `<span>
-        <a href="" @click.stop.prevent="update(rowData,index)">编辑</a>&nbsp;
-        <a href="" @click.stop.prevent="deleteRow(rowData,index)">删除</a>
-        </span>`,
-  props: {
-    rowData: {
-      type: Object
-    },
-    field: {
-      type: String
-    },
-    index: {
-      type: Number
-    }
-  },
-  methods: {
-    update() {
-      // 参数根据业务场景随意构造
-      let params = { type: "edit", index: this.index, rowData: this.rowData };
-      this.$emit("on-custom-comp", params);
-    },
-
-    deleteRow() {
-      // 参数根据业务场景随意构造
-      let params = { type: "delete", index: this.index };
-      this.$emit("on-custom-comp", params);
-    }
-  }
-});
 </script>
+<style lang='less'>
+.position {
+  padding-top: 52px;
+  padding-bottom: 50px;
+}
+</style>

@@ -43,15 +43,6 @@
           force-ellipses
           @change="pageChange"
         />
-        <!-- <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage3"
-          :page-size="100"
-          layout="prev, pager, next, jumper"
-          :total="1000"
-        ></el-pagination>-->
-        <!-- <el-pagination layout="prev, pager, next" :total="pageList.totalCount" :page-size="20" pager-count="5"></el-pagination> -->
       </div>
     </div>
     <van-popup v-model="selectCont" position="bottom">
@@ -61,8 +52,10 @@
         @confirm="checkOk"
         @cancel="selectCont = false"
         visible-item-count="3"
+        
       />
     </van-popup>
+    <kenCheck label="test"></kenCheck>
   </div>
 </template>
 

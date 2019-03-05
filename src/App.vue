@@ -5,18 +5,7 @@
       <transition name="transitionRouter">
         <router-view></router-view>
       </transition>
-      <!-- <van-button @click="show2 = true;">{{btnText}}</van-button>
-      <van-popup v-model="show2" position="bottom">
-        <van-picker
-          show-toolbar
-          :columns="columns"
-          @confirm="yes"
-          @cancel="show2 = false"
-          @change="onChange"
-        />
-      </van-popup>-->
     </main>
-    <!-- <router-view/> -->
     <router-view name="mainfooter"></router-view>
   </div>
 </template>

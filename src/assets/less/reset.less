@@ -20,6 +20,7 @@ body {
   user-select: none;
   line-height: 1;
   -webkit-tap-highlight-color: transparent;
+  background-color: @mainBg;
 }
 
 input {
@@ -53,4 +54,30 @@ input {
 }
 .text_blue {
   color: @blue;
+}
+
+/****************table*****************/
+.v-table-class {
+  font-size: 12px;
+  height: calc(~"100vh - 180px") !important;
+
+  &.v-table-views {
+    border-color: @mainSbg;
+  }
+  .v-table-body-cell {
+    height: 50px !important;
+    line-height: 50px !important;
+  }
+}
+.v-table-title-class {
+  font-weight: normal;
+  color: @write;
+}
+.v-table-body-class {
+  font-weight: normal;
+  color: @write;
+}
+.v-table-footer-class {
+  font-weight: normal;
+  color: @write;
 }
