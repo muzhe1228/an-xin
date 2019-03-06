@@ -13,24 +13,30 @@
     </div>
     <div class="home_wrap">
       <div class="title">
-        <h2>名称</h2>
+        <h2>选择</h2>
+        <h2>股票名称</h2>
         <h2>最新价</h2>
         <h2>涨跌</h2>
+        <h2>涨跌 %</h2>
+        <h2>买价</h2>
+        <h2>卖价</h2>
+        <h2>开盘价</h2>
+        <h2>最高价</h2>
+        <h2>最低价</h2>
+        <h2>成交量</h2>
         <h2>状态</h2>
-        <h2>差点</h2>
+        <h2>点差</h2>
         <h2>操作</h2>
       </div>
       <div class="info">
-        <ul class="info_single" v-for="item in List" :key="item.stock_code">
+        <ul class="info_single">
           <li>
-            <p>{{item.stock_name}}</p>
-            <p>{{item.stock_code}}</p>
           </li>
-          <li :class="isRed(item.stock_del)">{{item.stock_current_price|isNull}}</li>
+          <!-- <li :class="isRed(item.stock_del)">{{item.stock_current_price|isNull}}</li>
           <li :class="isRed(item.stock_del)">5.20%</li>
           <li class="text_blue">{{item.stock_del|isNormal}}</li>
           <li>0%</li>
-          <li @click="addBuyer(item.stock_code)">加入自选</li>
+          <li @click="addBuyer(item.stock_code)">加入自选</li> -->
         </ul>
       </div>
       <div class="pageWrap" v-if="pageList.pageCount>1">
@@ -43,6 +49,15 @@
           force-ellipses
           @change="pageChange"
         />
+        <!-- <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage3"
+          :page-size="100"
+          layout="prev, pager, next, jumper"
+          :total="1000"
+        ></el-pagination>-->
+        <!-- <el-pagination layout="prev, pager, next" :total="pageList.totalCount" :page-size="20" pager-count="5"></el-pagination> -->
       </div>
     </div>
     <van-popup v-model="selectCont" position="bottom">
@@ -52,10 +67,9 @@
         @confirm="checkOk"
         @cancel="selectCont = false"
         visible-item-count="3"
-        
       />
     </van-popup>
-    <kenCheck label="test"></kenCheck>
+    <van-checkbox v-model="checked" shape>复选框</van-checkbox>
   </div>
 </template>
 
@@ -64,6 +78,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      checked: true,
       searchVal: null,
       List: [],
       pageList: {},
@@ -84,7 +99,7 @@ export default {
   },
   methods: {
     init() {
-      this.getList();
+    //   this.getList();
     },
     checkOk(value, index) {
       if (this.selectValue != value) {

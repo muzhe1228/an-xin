@@ -1,11 +1,11 @@
 <template>
   <div class="position">
     <v-table
-      is-horizontal-resize
-      is-vertical-resize
-      style="width:100%"
       :columns="columns"
       :table-data="tableData"
+      is-horizontal-resize
+      style="width:100%"
+      :min-height="tableHeig"
       row-hover-color="#eee"
       row-click-color="#edf7ff"
       :show-vertical-border="false"
@@ -13,6 +13,8 @@
       even-bg-color="#0d223a"
       table-bg-color="#123053"
       title-bg-color="#0d223a"
+      :select-change="selectChange"
+      :select-group-change="selectGroupChange"
       @on-custom-comp="customCompFunc"
     ></v-table>
   </div>
@@ -20,7 +22,7 @@
 
 
 <script>
-import Vue from "vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -85,124 +87,67 @@ export default {
           tel: "197*****1123",
           hobby: "钢琴、书法、唱歌",
           address: "上海市青浦区青浦镇章浜路24号"
-        },
-        {
-          name: "吴伟",
-          tel: "183*****6678",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市松江区乐都西路867-871号"
-        },
-        {
-          name: "周伟",
-          tel: "197*****1123",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市青浦区青浦镇章浜路24号"
-        },
-        {
-          name: "吴伟",
-          tel: "183*****6678",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市松江区乐都西路867-871号"
-        },
-        {
-          name: "孙伟",
-          tel: "161*****0097",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市崇明县城桥镇八一路739号"
-        },
-        {
-          name: "周伟",
-          tel: "197*****1123",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市青浦区青浦镇章浜路24号"
-        },
-        {
-          name: "吴伟",
-          tel: "183*****6678",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市松江区乐都西路867-871号"
-        },
-        {
-          name: "周伟",
-          tel: "197*****1123",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市青浦区青浦镇章浜路24号"
-        },
-        {
-          name: "吴伟",
-          tel: "183*****6678",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市松江区乐都西路867-871号"
         }
       ],
       columns: [
         {
-          field: "custome",
-          title: "序号",
-          width: 50,
+          width: 60,
           titleAlign: "center",
           columnAlign: "center",
-          formatter: function(rowData, rowIndex, pagingIndex, field) {
-            return rowIndex < 3
-              ? '<span style="color:red;font-weight: bold;">' +
-                  (rowIndex + 1) +
-                  "</span>"
-              : rowIndex + 1;
-          },
+          type: "selection",
           isFrozen: true,
           isResize: true
         },
         {
           field: "name",
-          title: "姓名",
-          width: 80,
+          title: "股票名称",
+          width: 120,
           titleAlign: "center",
           columnAlign: "center",
           isResize: true
         },
         {
           field: "tel",
-          title: "手机号码",
-          width: 150,
+          title: "最新价",
+          width: 80,
           titleAlign: "center",
           columnAlign: "center",
           isResize: true
         },
         {
           field: "hobby",
-          title: "爱好",
-          width: 150,
+          title: "涨跌",
+          width: 80,
           titleAlign: "center",
           columnAlign: "center",
           isResize: true
         },
         {
           field: "address",
-          title: "地址",
-          width: 230,
+          title: "涨跌 %",
+          width: 80,
           titleAlign: "center",
           columnAlign: "left",
           isResize: true
         },
-        {
-          field: "custome-adv",
-          title: "操作",
-          width: 200,
-          titleAlign: "center",
-          columnAlign: "center",
-          componentName: "table-operation",
-          isResize: true
-        }
-      ]
+        
+      ],
+      tableHeig: 0
     };
   },
+  computed: {
+    ...mapState(["fontSize"])
+  },
+  created() {
+    this.calcTableH();
+  },
   methods: {
+    calcTableH() {
+      this.tableHeig = this.$heigCalc(this.fontSize, 100);
+    },
     customCompFunc(params) {
-      console.log(params);
-
       if (params.type === "delete") {
         // do delete operation
-
         this.$delete(this.tableData, params.index);
       } else if (params.type === "edit") {
         // do edit operation

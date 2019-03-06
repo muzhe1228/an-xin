@@ -59,7 +59,7 @@ input {
 /****************table*****************/
 .v-table-class {
   font-size: 12px;
-  height: calc(~"100vh - 180px") !important;
+  //   height: calc(~"100vh - 180px") !important;
 
   &.v-table-views {
     border-color: @mainSbg;
@@ -80,4 +80,17 @@ input {
 .v-table-footer-class {
   font-weight: normal;
   color: @write;
+}
+
+.van-checkbox__icon--checked .van-icon {
+  border-color: #debd63;
+  background-color: #debd63;
+}
+.van-checkbox__icon {
+  line-height: 18px;
+  .van-icon {
+    border-radius: 4px;
+    width: 18px;
+    height: 18px;
+  }
 }
