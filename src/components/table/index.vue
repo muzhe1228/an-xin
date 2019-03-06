@@ -6,14 +6,24 @@
       :style="{width:(columns[0].width*tableWidth/100) +'%'}"
     >{{columns[0].title}}</div>
     <div
-      class="body_l"
+      class="l_Shade"
       :class="isActive?'active':''"
-      ref="tableLeft"
       :style="{width:(columns[0].width*tableWidth/100)+'%'}"
     >
-      <p v-for="(item,index) in tableData" :key="index">{{item[columns[0].field]}}</p>
+      <div class="body_l" ref="tableLeft">
+        <p v-for="(item,index) in tableData" :key="index">
+          <van-checkbox
+            v-if="columns[0].field == 'check'"
+            v-model="item[columns[0].field]"
+            @change="change(item)"
+            shape
+          ></van-checkbox>
+          <span v-else>{{item[columns[0].field]}}</span>
+        </p>
+      </div>
     </div>
-    <div class="title">
+
+    <div class="title" :style="{width:tableWidth+'%'}">
       <ul class="title_head" ref="tableHead">
         <li
           v-for="(item,index) in columns"
@@ -69,6 +79,9 @@ export default {
   },
   components: {},
   methods: {
+    change(val) {
+      console.log(val);
+    },
     calcNum(num) {
       num = num * (tableData / 100) + "%";
       return {
@@ -104,28 +117,43 @@ export default {
   position: relative;
   overflow: hidden;
   color: @write;
+  padding-bottom: 50px;
   .title {
-    width: 200%;
     overflow: hidden;
     background-color: @mainSbg;
     &_head {
       width: 100%;
       display: flex;
+      flex-wrap: wrap;
       li {
         width: 10%;
         text-align: center;
         height: 50px;
         line-height: 50px;
+        border-left: 1px solid @mainSbg;
+        border-bottom: 1px solid @mainSbg;
       }
+    }
+  }
+  .l_Shade {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    padding-top: 50px;
+    overflow: hidden;
+    &.active {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     }
   }
   .body {
     width: 100%;
-    height: calc(~"100% - 1rem");
+    height: 100%;
     overflow: scroll;
     background-color: @mainBg;
+    // padding-bottom: 50px;
     &_cont {
-      width: 200%;
       overflow: hidden;
     }
   }
@@ -133,6 +161,7 @@ export default {
   .bodyItem {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     li {
       width: 10%;
       text-align: center;
@@ -144,14 +173,7 @@ export default {
   }
 
   .body_l {
-    width: 20%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    padding-top: 50px;
-    &.active {
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-    }
+    width: 100%;
     p {
       width: 100%;
       text-align: center;
@@ -169,7 +191,7 @@ export default {
     height: 50px;
     line-height: 50px;
     text-align: center;
-    z-index: 1;
+    z-index: 2;
     background-color: @mainSbg;
     &.active {
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);

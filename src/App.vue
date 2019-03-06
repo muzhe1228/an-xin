@@ -97,7 +97,7 @@ export default {
 
   .transitionRouter-enter,
   .transitionRouter-leave {
-    transform: translate3d(100%, 0, 0);
+    opacity: 0;
   }
 }
 </style>

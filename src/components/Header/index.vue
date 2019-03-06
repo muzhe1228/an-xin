@@ -30,7 +30,7 @@ header {
   box-shadow: 0 5px 20px -5px @shadow;
   border-bottom: 2px solid #333;
   background-color: @mainBg;
-  z-index: 2;
+  z-index: 9;
   display: flex;
   align-items: center;
   justify-content: center;

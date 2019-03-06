@@ -4,5 +4,9 @@ export default {
   [types.SET_FONTSIZE](state, fontSize) {
     lStore.set("fontSize", fontSize);
     state.fontSize = fontSize;
+  },
+  [types.SET_TABBARVAL](state, tabbarVal) {
+    lStore.set("tabbarVal", tabbarVal);
+    state.tabbarVal = tabbarVal;
   }
 };

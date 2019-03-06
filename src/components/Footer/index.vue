@@ -10,20 +10,34 @@
 
 <script>
 import { Tabbar, TabbarItem } from "vant";
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      active: 0
+      active: this.$store.state.tabbarVal
     };
+  },
+  computed: {
+    ...mapState(["tabbarVal"])
   },
   components: {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem
   },
+  mounted() {
+    this._initPage();
+  },
   methods: {
+    _initPage() {
+      console.log(111111111)
+      // let active = this.tabbarVal;
+      // this.active = active;
+    },
     change(index) {
-      console.log(index);
-    }
+      this.SET_TABBARVAL(index);
+      this.active = index;
+    },
+    ...mapMutations(["SET_TABBARVAL"])
   }
 };
 </script>

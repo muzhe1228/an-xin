@@ -1,166 +1,208 @@
 <template>
-  <div class="position">
-    <v-table
+  <div class="Position">
+    <kenTable
+      :tableData="tableData"
+      tableHeight="calc(100vh - 4.4rem)"
       :columns="columns"
-      :table-data="tableData"
-      is-horizontal-resize
-      style="width:100%"
-      :min-height="tableHeig"
-      row-hover-color="#eee"
-      row-click-color="#edf7ff"
-      :show-vertical-border="false"
-      :show-horizontal-border="false"
-      even-bg-color="#0d223a"
-      table-bg-color="#123053"
-      title-bg-color="#0d223a"
-      :select-change="selectChange"
-      :select-group-change="selectGroupChange"
-      @on-custom-comp="customCompFunc"
-    ></v-table>
+      :tableWidth="'320'"
+    >
+      <ul class="bodyItem" v-for="(item,index) in tableData" :key="index" slot="list">
+        <li v-for="(fields,i) in columns" :key="i" :style="{width:fields.width + '%'}">
+          <van-button v-if="fields.field =='operation'" size="mini" @click="alert(item.name)">平仓</van-button>
+          <span v-else-if="fields.field =='check'"></span>
+          <p v-else>{{item[fields.field]+index}}</p>
+        </li>
+      </ul>
+    </kenTable>
+    <ul class="Position_balance">
+      <li>
+        <p>留仓盈亏小计：</p>
+        <p class="text_green">￥-112064.11</p>
+      </li>
+      <li>
+        <p>盈亏合计：</p>
+        <p class="text_green">￥-112064.11</p>
+      </li>
+      <li>
+        <p>留仓总金额：</p>
+        <p class="text_red">￥2277520.00</p>
+      </li>
+    </ul>
   </div>
 </template>
 
-
 <script>
-import { mapState } from "vuex";
-
+import kenTable from "components/table";
 export default {
   data() {
     return {
       tableData: [
         {
+          check: false,
           name: "赵伟",
           tel: "156*****1987",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市黄浦区金陵东路569号17楼"
-        },
-        {
-          name: "李伟",
-          tel: "182*****1538",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市奉贤区南桥镇立新路12号2楼"
-        },
-        {
-          name: "孙伟",
-          tel: "161*****0097",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市崇明县城桥镇八一路739号"
-        },
-        {
-          name: "周伟",
-          tel: "197*****1123",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市青浦区青浦镇章浜路24号"
-        },
-        {
-          name: "吴伟",
-          tel: "183*****6678",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市松江区乐都西路867-871号"
-        },
-        {
-          name: "周伟",
-          tel: "197*****1123",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市青浦区青浦镇章浜路24号"
-        },
-        {
-          name: "吴伟",
-          tel: "183*****6678",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市松江区乐都西路867-871号"
-        },
-        {
-          name: "李伟",
-          tel: "182*****1538",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市奉贤区南桥镇立新路12号2楼"
-        },
-        {
-          name: "孙伟",
-          tel: "161*****0097",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市崇明县城桥镇八一路739号"
-        },
-        {
-          name: "周伟",
-          tel: "197*****1123",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市青浦区青浦镇章浜路24号"
+          hobby: "钢琴",
+          address: "上海市黄"
         }
       ],
       columns: [
         {
-          width: 60,
+          field: "name",
+          title: "股票名称",
+          width: 9,
           titleAlign: "center",
           columnAlign: "center",
-          type: "selection",
-          isFrozen: true,
           isResize: true
         },
         {
-          field: "name",
-          title: "股票名称",
-          width: 120,
+          field: "operation",
+          title: "操作",
+          width: 7,
           titleAlign: "center",
-          columnAlign: "center",
+          columnAlign: "left",
           isResize: true
         },
         {
           field: "tel",
-          title: "最新价",
-          width: 80,
+          title: "方向",
+          width: 7,
           titleAlign: "center",
           columnAlign: "center",
           isResize: true
         },
         {
           field: "hobby",
-          title: "涨跌",
-          width: 80,
+          title: "成交价格",
+          width: 7,
           titleAlign: "center",
           columnAlign: "center",
           isResize: true
         },
         {
           field: "address",
-          title: "涨跌 %",
-          width: 80,
+          title: "数量（手）",
+          width: 7,
           titleAlign: "center",
           columnAlign: "left",
           isResize: true
         },
-        
-      ],
-      tableHeig: 0
+        {
+          field: "name",
+          title: "成交金额",
+          width: 7,
+          titleAlign: "center",
+          columnAlign: "center",
+          isResize: true
+        },
+        {
+          field: "tel",
+          title: "手续费",
+          width: 7,
+          titleAlign: "center",
+          columnAlign: "center",
+          isResize: true
+        },
+        {
+          field: "hobby",
+          title: "可卖数量（手）",
+          width: 7,
+          titleAlign: "center",
+          columnAlign: "center",
+          isResize: true
+        },
+        {
+          field: "address",
+          title: "留仓天数/费用",
+          width: 7,
+          titleAlign: "center",
+          columnAlign: "left",
+          isResize: true
+        },
+        {
+          field: "hobby",
+          title: "点差",
+          width: 7,
+          titleAlign: "center",
+          columnAlign: "center",
+          isResize: true
+        },
+        {
+          field: "address",
+          title: "现价",
+          width: 7,
+          titleAlign: "center",
+          columnAlign: "left",
+          isResize: true
+        },
+        {
+          field: "hobby",
+          title: "盈亏（？）",
+          width: 7,
+          titleAlign: "center",
+          columnAlign: "center",
+          isResize: true
+        },
+        {
+          field: "address",
+          title: "下单时间",
+          width: 7,
+          titleAlign: "center",
+          columnAlign: "left",
+          isResize: true
+        },
+        {
+          field: "address",
+          title: "订单号",
+          width: 7,
+          titleAlign: "center",
+          columnAlign: "left",
+          isResize: true
+        }
+      ]
     };
   },
-  computed: {
-    ...mapState(["fontSize"])
+  mounted() {
+    let List = [];
+    for (let i = 0; i < 20; i++) {
+      List.push({
+        check: false,
+        name: "赵伟",
+        tel: "156*****1987",
+        hobby: "钢琴",
+        address: "上海市黄"
+      });
+    }
+    this.tableData = List;
+    console.log(this.tableData.length);
   },
-  created() {
-    this.calcTableH();
-  },
-  methods: {
-    calcTableH() {
-      this.tableHeig = this.$heigCalc(this.fontSize, 100);
-    },
-    customCompFunc(params) {
-      if (params.type === "delete") {
-        // do delete operation
-        this.$delete(this.tableData, params.index);
-      } else if (params.type === "edit") {
-        // do edit operation
+  components: { kenTable },
+  methods: {}
+};
+</script>
 
-        alert(`行号：${params.index} 姓名：${params.rowData["name"]}`);
+<style scoped lang="less">
+@import "~assets/less/comm.less";
+.Position {
+  margin-top: 50px;
+  &_balance {
+    width: 100%;
+    border: 1px solid @mainSbg;
+    font-size: 12px;
+    li {
+      height: 40px;
+      border-bottom: 1px solid @mainSbg;
+      display: flex;
+      p {
+        border-left: 1px solid @mainSbg;
+        line-height: 40px;
+        padding-left: 8px;
+        &:first-child {
+          width: 32%;
+          text-align: center;
+          color: @write;
+        }
       }
     }
   }
-};
-</script>
-<style lang='less'>
-.position {
-  padding-top: 52px;
-  padding-bottom: 50px;
 }
 </style>

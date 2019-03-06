@@ -1,18 +1,33 @@
+
+
+
+
 <template>
-  <div class="quick_order">
-    <kenTable :tableData="tableData" :columns="columns" :tableWidth="'120'">
-      <ul class="bodyItem" v-for="(item,index) in tableData" :key="index" slot="list">
-        <li v-for="(fields,index) in columns" :key="index" :style="{width:fields.width + '%'}">
-          {{item[fields.field]}}
-          <span>11</span>
-        </li>
-      </ul>
-    </kenTable>
+  <div class="position">
+    <v-table
+      :columns="columns"
+      :table-data="tableData"
+      is-horizontal-resize
+      style="width:100%"
+      :min-height="tableHeig"
+      row-hover-color="#eee"
+      row-click-color="#edf7ff"
+      :show-vertical-border="false"
+      :show-horizontal-border="false"
+      even-bg-color="#0d223a"
+      table-bg-color="#123053"
+      title-bg-color="#0d223a"
+      :select-change="selectChange"
+      :select-group-change="selectGroupChange"
+      @on-custom-comp="customCompFunc"
+    ></v-table>
   </div>
 </template>
 
+
 <script>
-import kenTable from "components/table";
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -80,9 +95,17 @@ export default {
       ],
       columns: [
         {
+          width: 60,
+          titleAlign: "center",
+          columnAlign: "center",
+          type: "selection",
+          isFrozen: true,
+          isResize: true
+        },
+        {
           field: "name",
           title: "股票名称",
-          width: 25,
+          width: 120,
           titleAlign: "center",
           columnAlign: "center",
           isResize: true
@@ -90,7 +113,7 @@ export default {
         {
           field: "tel",
           title: "最新价",
-          width: 25,
+          width: 80,
           titleAlign: "center",
           columnAlign: "center",
           isResize: true
@@ -98,7 +121,7 @@ export default {
         {
           field: "hobby",
           title: "涨跌",
-          width: 25,
+          width: 80,
           titleAlign: "center",
           columnAlign: "center",
           isResize: true
@@ -106,21 +129,42 @@ export default {
         {
           field: "address",
           title: "涨跌 %",
-          width: 25,
+          width: 80,
           titleAlign: "center",
           columnAlign: "left",
           isResize: true
-        }
-      ]
+        },
+        
+      ],
+      tableHeig: 0
     };
   },
-  components: { kenTable },
-  methods: {}
+  computed: {
+    ...mapState(["fontSize"])
+  },
+  created() {
+    this.calcTableH();
+  },
+  methods: {
+    calcTableH() {
+      this.tableHeig = this.$heigCalc(this.fontSize, 100);
+    },
+    customCompFunc(params) {
+      if (params.type === "delete") {
+        // do delete operation
+        this.$delete(this.tableData, params.index);
+      } else if (params.type === "edit") {
+        // do edit operation
+
+        alert(`行号：${params.index} 姓名：${params.rowData["name"]}`);
+      }
+    }
+  }
 };
 </script>
-
-<style scoped lang="less">
-.quick_order {
-  margin-top: 52px;
+<style lang='less'>
+.position {
+  padding-top: 52px;
+  padding-bottom: 50px;
 }
 </style>
