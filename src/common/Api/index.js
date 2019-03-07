@@ -41,7 +41,7 @@ class http {
         url: options.url,
         method: "get",
         baseURL: this.baseApi,
-        timeout: 50000,
+        timeout: 5000,
         params: params
       })
         .then(response => {
@@ -68,7 +68,7 @@ class http {
         url: options.url,
         method: "post",
         baseURL: this.baseApi,
-        timeout: 50000,
+        timeout: 5000,
         params: params
       })
         .then(response => {
@@ -95,7 +95,7 @@ class http {
         url: options.url,
         method: "post",
         baseURL: this.baseApi,
-        timeout: 50000,
+        timeout: 5000,
         data: params
       })
         .then(response => {

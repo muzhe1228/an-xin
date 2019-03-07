@@ -6,15 +6,16 @@
       <van-button class="showAll" size="mini">加入自选股</van-button>
     </div>
     <kenTable
-      :tableData="tableData"
+      :tableData="buyerStockList"
       tableHeight="calc(100vh - 3rem)"
       :columns="columns"
       :tableWidth="'280'"
     >
-      <ul class="bodyItem" v-for="(item,index) in tableData" :key="index" slot="list">
+      <ul class="bodyItem" v-for="(item,index) in buyerStockList" :key="index" slot="list">
         <li v-for="(fields,index) in columns" :key="index" :style="{width:fields.width + '%'}">
           <van-button v-if="fields.field =='operation'" size="mini" @click="alert(item.name)">下单</van-button>
           <span v-else-if="fields.field =='check'"></span>
+          <div v-else-if="fields.formatter" v-html="fields.formatter(item,fields.field)"></div>
           <p v-else>{{item[fields.field]}}</p>
         </li>
       </ul>
@@ -24,10 +25,12 @@
 
 <script>
 import kenTable from "components/table";
+import { mapGetters } from "vuex";
+import { isNormal } from "common/func";
 export default {
   data() {
     return {
-      tableData: [
+      buyerStockList: [
         {
           check: false,
           name: "赵伟",
@@ -46,15 +49,24 @@ export default {
           isResize: true
         },
         {
-          field: "name",
+          field: "stock_name",
           title: "股票名称",
+          formatter: function(rowData, field) {
+            return `<p style="display: flex;
+        padding: 0.1rem 0;
+        flex-direction: column;
+        height: 1rem;">
+            <span style="line-height: 0.4rem;">${rowData[field]}</span>
+            <span style="line-height: 0.4rem;">${rowData.stock_code}</span>
+            </p>`;
+          },
           width: 9,
           titleAlign: "center",
           columnAlign: "center",
           isResize: true
         },
         {
-          field: "tel",
+          field: "stock_current_price",
           title: "最新价",
           width: 7,
           titleAlign: "center",
@@ -94,7 +106,7 @@ export default {
           isResize: true
         },
         {
-          field: "hobby",
+          field: "stock_open_price",
           title: "开盘价",
           width: 7,
           titleAlign: "center",
@@ -102,7 +114,7 @@ export default {
           isResize: true
         },
         {
-          field: "address",
+          field: "stock_highest_price ",
           title: "最高价",
           width: 7,
           titleAlign: "center",
@@ -110,7 +122,7 @@ export default {
           isResize: true
         },
         {
-          field: "hobby",
+          field: "stock_lowest_price ",
           title: "最低价",
           width: 7,
           titleAlign: "center",
@@ -118,7 +130,7 @@ export default {
           isResize: true
         },
         {
-          field: "address",
+          field: "stock_total_deal ",
           title: "成交量",
           width: 7,
           titleAlign: "center",
@@ -126,7 +138,10 @@ export default {
           isResize: true
         },
         {
-          field: "hobby",
+          field: "stock_del",
+          formatter: function(rowData, field) {
+            return `<span>${isNormal(rowData[field])}</span>`;
+          },
           title: "状态",
           width: 7,
           titleAlign: "center",
@@ -149,25 +164,41 @@ export default {
           columnAlign: "left",
           isResize: true
         }
-      ]
+      ],
+      req: {
+        buyer_id: ""
+      }
     };
   },
+  computed: {
+    ...mapGetters({ userId: "getUserId" })
+  },
   mounted() {
-    let List = [];
-    for (let i = 0; i < 20; i++) {
-      List.push({
-        check: false,
-        name: "赵伟",
-        tel: "156*****1987",
-        hobby: "钢琴",
-        address: "上海市黄"
-      });
-    }
-    this.tableData = List;
-    console.log(this.columns.length);
+    this._initPage();
   },
   components: { kenTable },
-  methods: {}
+  methods: {
+    _initPage() {
+      this.req.buyer_id = this.userId;
+      this.getOptionalData(this.req);
+    },
+    getOptionalData(req) {
+      if (this.userId) {
+        this.$http
+          .get({
+            url: "/stock/findBuyerStockList",
+            data: req
+          })
+          .then(res => {
+            console.log(res);
+            res.buyerStockList.forEach(item => {
+              item.check = false;
+            });
+            this.buyerStockList = res.buyerStockList;
+          });
+      }
+    }
+  }
 };
 </script>
 

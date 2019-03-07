@@ -8,5 +8,9 @@ export default {
   [types.SET_TABBARVAL](state, tabbarVal) {
     lStore.set("tabbarVal", tabbarVal);
     state.tabbarVal = tabbarVal;
+  },
+  [types.SET_USERINFO](state, userInfo) {
+    lStore.set("userInfo", userInfo);
+    state.userInfo = userInfo;
   }
 };

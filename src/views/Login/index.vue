@@ -6,11 +6,11 @@
     <div class="login_from">
       <div class="inpGroup">
         <p class="iconfont">&#xe618;</p>
-        <input type="text" placeholder="请输入用户名">
+        <input type="text" v-model="loginData.buyerLoginName" placeholder="请输入用户名">
       </div>
       <div class="inpGroup">
         <p class="iconfont">&#xe61b;</p>
-        <input type="text" placeholder="请输入登录密码">
+        <input type="text" v-model="loginData.buyerLoginPwd" placeholder="请输入登录密码">
       </div>
       <div class="inpGroup">
         <p class="iconfont">&#xe619;</p>
@@ -26,26 +26,43 @@
 </template>
 
 <script>
+import { isAction, isPwd } from "common/func";
+import { mapActions } from "vuex";
+import { debug } from "util";
 export default {
   data() {
-    return {};
+    return {
+      loginData: {
+        buyerLoginName: "",
+        buyerLoginPwd: ""
+      }
+    };
   },
   components: {},
   methods: {
     login() {
-      this.$http
-        .post({
-          url: "/account/doBuyerLogin",
-          data: {
-            buyerLoginName: "lian",
-            buyerLoginPwd: 123456
-          }
-        })
-        .then(res => {
-          console.log(res);
-          this.$router.push("/");
-        });
-    }
+      const { buyerLoginName, buyerLoginPwd } = this.loginData;
+      if (!isAction(buyerLoginName)) {
+        alert("账号不能为空");
+      } else if (!isPwd(buyerLoginPwd)) {
+        alert("密码不能为空");
+      } else {
+        this.$http
+          .post({
+            url: "/account/doBuyerLogin",
+            data: this.loginData
+          })
+          .then(res => {
+            if (res.buyerMsg) {
+              this.updateUserInfo(res.buyerMsg);
+              this.$router.push("/");
+            } else {
+              alert(res.errorMsg);
+            }
+          });
+      }
+    },
+    ...mapActions(["updateUserInfo"])
   }
 };
 </script>

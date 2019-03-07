@@ -236,6 +236,10 @@ function toFixeds(nums, len) {
     return "--";
   }
 }
+function isAction(str) {
+  var reg = /[a-zA-Z0-9_]{4,10}/;
+  return reg.test(str);
+}
 
 function isEmail(str) {
   var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
@@ -422,10 +426,19 @@ function getAppType() {
   }
 }
 
+function isNormal(type) {
+  //股票是否正常可以
+  if (type) {
+    return "不可以";
+  } else {
+    return "正常";
+  }
+}
 export {
   Store,
   lStore,
   sStore,
+  isAction,
   isEmail,
   isPwd,
   isCode,
@@ -441,5 +454,6 @@ export {
   numberFormat,
   isIos,
   IsPC,
-  getAppType
+  getAppType,
+  isNormal
 };

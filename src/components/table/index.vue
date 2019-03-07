@@ -169,6 +169,15 @@ export default {
       line-height: 50px;
       border-left: 1px solid @mainSbg;
       border-bottom: 1px solid @mainSbg;
+      .name_group {
+        display: flex;
+        padding: 5px 0;
+        flex-direction: column;
+        height: 50px;
+        span {
+          line-height: 20px;
+        }
+      }
     }
   }
 

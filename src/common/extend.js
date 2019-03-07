@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Ajax, { http } from "./Api";
-// import { lStore, sStore } from "./func";
+import { isNormal, lStore, sStore } from "./func";
 // Vue.prototype.$lStore = lStore;
 // Vue.prototype.$sStore = sStore;
 
@@ -12,14 +12,6 @@ function isNull(data) {
   }
 }
 
-function isNormal(type) {
-  //股票是否正常可以
-  if (type) {
-    return "不可以";
-  } else {
-    return "正常";
-  }
-}
 function heigCalc(size, heig) {
   let clHeig = document.documentElement.clientHeight;
   heig = heig || 0;
