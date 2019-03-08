@@ -12,8 +12,16 @@
         <p>{{userName}}</p>
       </div>
     </div>
-    <van-cell title="修改密码" is-link to="/edit_pwd"/>
-    <van-cell title="资金密码" is-link to="index"/>
+    <van-cell title="修改密码" icon="setting-o" is-link to="/edit_pwd"/>
+    <van-cell title="资金密码" icon="setting-o" is-link to="index"/>
+    <van-cell title="修改密码" icon="setting-o" is-link to="/edit_pwd"/>
+    <van-cell title="资金密码" icon="setting-o" is-link to="index"/>
+    <van-cell title="修改密码" icon="setting-o" is-link to="/edit_pwd"/>
+    <van-cell title="资金密码" icon="setting-o" is-link to="index"/>
+    <van-cell title="修改密码" icon="setting-o" is-link to="/edit_pwd"/>
+    <van-cell title="资金密码" icon="setting-o" is-link to="index"/>
+    <van-cell title="修改密码" icon="setting-o" is-link to="/edit_pwd"/>
+    <van-cell title="资金密码" icon="setting-o" is-link to="index"/>
   </div>
 </template>
 
