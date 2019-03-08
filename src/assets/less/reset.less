@@ -55,6 +55,15 @@ input {
 .text_blue {
   color: @blue;
 }
+input {
+  // outline: none;
+  border: 1px solid @border;
+  border-radius: 4px;
+  padding: 0 4px;
+  &:focus {
+    border-color: @lineH;
+  }
+}
 
 /****************table*****************/
 .v-table-class {
@@ -93,4 +102,14 @@ input {
     width: 18px;
     height: 18px;
   }
+}
+.van-nav-bar {
+  background-color: @mainBg;
+  &__title,
+  .van-icon {
+    color: @write;
+  }
+}
+.van-field__control {
+  color: @write;
 }

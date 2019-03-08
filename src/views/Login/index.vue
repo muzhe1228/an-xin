@@ -10,7 +10,7 @@
       </div>
       <div class="inpGroup">
         <p class="iconfont">&#xe61b;</p>
-        <input type="text" v-model="loginData.buyerLoginPwd" placeholder="请输入登录密码">
+        <input type="password" v-model="loginData.buyerLoginPwd" placeholder="请输入登录密码">
       </div>
       <div class="inpGroup">
         <p class="iconfont">&#xe619;</p>
@@ -18,7 +18,7 @@
       </div>
       <div class="btnGroup">
         <van-button class="loginBtn" @click="login" size="mini">登录</van-button>
-        <van-button class="Register" size="mini">注册</van-button>
+        <van-button class="Register" @click="toRegister" size="mini">注册</van-button>
       </div>
     </div>
     <p class="copyright">&copy;2019-安信证券</p>
@@ -43,9 +43,9 @@ export default {
     login() {
       const { buyerLoginName, buyerLoginPwd } = this.loginData;
       if (!isAction(buyerLoginName)) {
-        alert("账号不能为空");
+        this.$toast.fail("账号不能为空");
       } else if (!isPwd(buyerLoginPwd)) {
-        alert("密码不能为空");
+        this.$toast.fail("密码不能为空");
       } else {
         this.$http
           .post({
@@ -57,10 +57,13 @@ export default {
               this.updateUserInfo(res.buyerMsg);
               this.$router.push("/");
             } else {
-              alert(res.errorMsg);
+              this.$toast.fail(res.errorMsg);
             }
           });
       }
+    },
+    toRegister() {
+      this.$router.push("/register");
     },
     ...mapActions(["updateUserInfo"])
   }

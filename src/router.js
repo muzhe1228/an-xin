@@ -50,9 +50,14 @@ export default new Router({
       name: "MoreOther",
       components: {
         default: () => import("./views/MoreOther"),
-        mainheader: Header,
+        // mainheader: Header,
         mainfooter: Footer
       }
+    },
+    {
+      path: "/edit_pwd",
+      name: "EditPwd",
+      component: () => import("./views/MoreOther/EditPwd.vue")
     },
     {
       path: "/login",

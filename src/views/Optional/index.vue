@@ -1,15 +1,16 @@
 <template>
   <div class="quick_order">
     <div class="home_controller">
-      <van-button class="searchBtn" size="mini">删除自选</van-button>
-      <input class="searchInp" type="text" placeholder="代码/名称/拼音">
-      <van-button class="showAll" size="mini">加入自选股</van-button>
+      <van-button class="searchBtn" size="mini" @click="delOption(checkArr)">删除自选</van-button>
+      <input class="searchInp" type="text" placeholder="股票编码 , 号分割" v-model="code">
+      <van-button class="showAll" size="mini" @click="addOptional(code)">加入自选股</van-button>
     </div>
     <kenTable
       :tableData="buyerStockList"
       tableHeight="calc(100vh - 3rem)"
       :columns="columns"
       :tableWidth="'280'"
+      @tableCheck="checkChange"
     >
       <ul class="bodyItem" v-for="(item,index) in buyerStockList" :key="index" slot="list">
         <li v-for="(fields,index) in columns" :key="index" :style="{width:fields.width + '%'}">
@@ -27,6 +28,7 @@
 import kenTable from "components/table";
 import { mapGetters } from "vuex";
 import { isNormal } from "common/func";
+import { constants } from "fs";
 export default {
   data() {
     return {
@@ -167,7 +169,9 @@ export default {
       ],
       req: {
         buyer_id: ""
-      }
+      },
+      checkArr: [],
+      code: ""
     };
   },
   computed: {
@@ -196,6 +200,61 @@ export default {
             });
             this.buyerStockList = res.buyerStockList;
           });
+      }
+    },
+    checkChange(val) {
+      if (val.check) {
+        this.checkArr.push(val.stock_code);
+        console.log(this.checkArr);
+      } else {
+        let checkArr = this.checkArr.concat();
+        for (let i = 0; i < checkArr.length; i++) {
+          if (checkArr[i] == val.stock_code) {
+            checkArr.splice(i, 1);
+            this.checkArr = checkArr;
+            return;
+          }
+        }
+      }
+    },
+    delOption(stockId) {
+      console.log(this.checkArr);
+      if (this.userId) {
+        this.$http
+          .post({
+            url: "/stock/delBuyerStock",
+            data: {
+              buyer_id: this.userId,
+              stock_codes: this.checkArr.join(",")
+            }
+          })
+          .then(res => {
+            if (res.flag) {
+              this.getOptionalData(this.req);
+            }
+          });
+      }
+    },
+    addOptional(string) {
+      if (string) {
+        if (this.userId) {
+          this.$http
+            .post({
+              url: "/stock/addBuyerStockList",
+              data: {
+                buyer_id: this.userId,
+                stock_code: string
+              }
+            })
+            .then(res => {
+              if (res.flag) {
+                this.$toast.success("添加自选成功");
+                this.getOptionalData(this.req);
+              }
+            });
+        }
+      } else {
+        this.$toast.fail("请输入股票编码");
       }
     }
   }

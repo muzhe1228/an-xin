@@ -12,7 +12,10 @@ import {
   Picker,
   Toast,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  NavBar,
+  Field,
+  Cell
 } from "vant";
 // 引入样式
 import "vue-easytable/libs/themes-base/index.css";
@@ -22,11 +25,14 @@ Vue.use(Button)
   .use(Pagination)
   .use(Popup)
   .use(Picker)
+  .use(Toast, Toast.setDefaultOptions({ duration: 1000 }))
   .use(VTable)
   .use(VPagination)
   .use(Checkbox)
   .use(CheckboxGroup)
-  .use(Toast, Toast.setDefaultOptions({ duration: 1000 }));
+  .use(Field)
+  .use(NavBar)
+  .use(Cell);
 Vue.config.productionTip = false;
 
 new Vue({

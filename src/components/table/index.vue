@@ -80,7 +80,7 @@ export default {
   components: {},
   methods: {
     change(val) {
-      console.log(val);
+      this.$emit("tableCheck", val);
     },
     calcNum(num) {
       num = num * (tableData / 100) + "%";
