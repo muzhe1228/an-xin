@@ -60,6 +60,26 @@ export default new Router({
       component: () => import("./views/MoreOther/EditPwd.vue")
     },
     {
+      path: "/capital_pwd",
+      name: "capitalPwd",
+      component: () => import("./views/MoreOther/capitalPwd.vue")
+    },
+    {
+      path: "/system_rule",
+      name: "systemRule",
+      component: () => import("./views/MoreOther/systemRule.vue")
+    },
+    {
+      path: "/system_notice",
+      name: "systemNotice",
+      component: () => import("./views/MoreOther/systemNotice.vue")
+    },
+    {
+      path: "/setting",
+      name: "setting",
+      component: () => import("./views/MoreOther/setting.vue")
+    },
+    {
       path: "/login",
       name: "Login",
       components: {

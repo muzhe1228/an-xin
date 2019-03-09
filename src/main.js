@@ -9,6 +9,7 @@ import {
   Button,
   Pagination,
   Popup,
+  Icon,
   Picker,
   Toast,
   Checkbox,
@@ -24,6 +25,7 @@ import { VTable, VPagination } from "vue-easytable";
 Vue.use(Button)
   .use(Pagination)
   .use(Popup)
+  .use(Icon)
   .use(Picker)
   .use(Toast, Toast.setDefaultOptions({ duration: 1000 }))
   .use(VTable)
