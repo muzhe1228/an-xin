@@ -33,13 +33,6 @@ export default {
   data() {
     return {
       buyerStockList: [
-        {
-          check: false,
-          name: "赵伟",
-          tel: "156*****1987",
-          hobby: "钢琴",
-          address: "上海市黄"
-        }
       ],
       columns: [
         {

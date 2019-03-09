@@ -1,6 +1,6 @@
 <template>
   <van-tabbar v-model="active" @change="change">
-    <van-tabbar-item to="/" value="/about" icon="home-o">首页</van-tabbar-item>
+    <van-tabbar-item to="/" icon="home-o">首页</van-tabbar-item>
     <van-tabbar-item to="/optional" icon="search">自选</van-tabbar-item>
     <van-tabbar-item to="/quick_order" icon="friends-o">快速下单</van-tabbar-item>
     <van-tabbar-item to="/position" icon="setting-o">持仓</van-tabbar-item>
@@ -24,18 +24,22 @@ export default {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem
   },
+  watch: {
+    tabbarVal(newVal) {
+      this.active = newVal;
+    }
+  },
   mounted() {
     this._initPage();
   },
   methods: {
     _initPage() {
-      console.log(111111111)
+      console.log(111111111);
       // let active = this.tabbarVal;
       // this.active = active;
     },
     change(index) {
       this.SET_TABBARVAL(index);
-      this.active = index;
     },
     ...mapMutations(["SET_TABBARVAL"])
   }

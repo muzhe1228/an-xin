@@ -50,7 +50,7 @@
           :page-size="100"
           layout="prev, pager, next, jumper"
           :total="1000"
-        ></el-pagination> -->
+        ></el-pagination>-->
         <!-- <el-pagination layout="prev, pager, next" :total="pageList.totalCount" :page-size="20" pager-count="5"></el-pagination> -->
       </div>
     </div>
@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -91,6 +90,7 @@ export default {
   },
   methods: {
     init() {
+      console.log(this.$route.params.type);
       this.getList();
     },
     checkOk(value, index) {
@@ -219,6 +219,7 @@ export default {
       h2 {
         text-align: center;
         font-weight: 400;
+        font-size: 11px;
         width: 13%;
         border-right: 2px solid @mainSbg;
         &:first-child {

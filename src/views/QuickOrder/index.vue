@@ -1,170 +1,102 @@
-
-
-
-
 <template>
-  <div class="position">
-    <v-table
-      :columns="columns"
-      :table-data="tableData"
-      is-horizontal-resize
-      style="width:100%"
-      :min-height="tableHeig"
-      row-hover-color="#eee"
-      row-click-color="#edf7ff"
-      :show-vertical-border="false"
-      :show-horizontal-border="false"
-      even-bg-color="#0d223a"
-      table-bg-color="#123053"
-      title-bg-color="#0d223a"
-      :select-change="selectChange"
-      :select-group-change="selectGroupChange"
-      @on-custom-comp="customCompFunc"
-    ></v-table>
+  <div class="quickOrder">
+    <div class="quickOrder_tips">休市中，不能买入股票</div>
+    <ul class="quickOrder_top">
+      <li>
+        <p>交易账户：</p>
+        <p>xt987541</p>
+      </li>
+      <li>
+        <p>可用余额:</p>
+        <p>￥8289650.30</p>
+      </li>
+      <li class="single">
+        <p>股票代码：</p>
+        <p>
+          <input class="searchInp" type="text" v-model="searchVal" @change="searchChange">
+        </p>
+      </li>
+      <li>
+        <p>股票名称：</p>
+        <p>￥8289650.30</p>
+      </li>
+      <li>
+        <p>当前价格：</p>
+        <p>￥8289650.30</p>
+      </li>
+      <li>
+        <p>点差：</p>
+        <p>￥8289650.30</p>
+      </li>
+      <li>
+        <p>升跌类型：</p>
+        <p>￥8289650.30</p>
+      </li>
+      <li>
+        <p>委托手手数：</p>
+        <p>￥8289650.30</p>
+      </li>
+      <li>
+        <p>总股数：</p>
+        <p>￥8289650.30</p>
+      </li>
+    </ul>
   </div>
 </template>
 
-
 <script>
-import { mapState } from "vuex";
-
 export default {
   data() {
     return {
-      tableData: [
-        {
-          name: "赵伟",
-          tel: "156*****1987",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市黄浦区金陵东路569号17楼"
-        },
-        {
-          name: "李伟",
-          tel: "182*****1538",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市奉贤区南桥镇立新路12号2楼"
-        },
-        {
-          name: "孙伟",
-          tel: "161*****0097",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市崇明县城桥镇八一路739号"
-        },
-        {
-          name: "周伟",
-          tel: "197*****1123",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市青浦区青浦镇章浜路24号"
-        },
-        {
-          name: "吴伟",
-          tel: "183*****6678",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市松江区乐都西路867-871号"
-        },
-        {
-          name: "周伟",
-          tel: "197*****1123",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市青浦区青浦镇章浜路24号"
-        },
-        {
-          name: "吴伟",
-          tel: "183*****6678",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市松江区乐都西路867-871号"
-        },
-        {
-          name: "李伟",
-          tel: "182*****1538",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市奉贤区南桥镇立新路12号2楼"
-        },
-        {
-          name: "孙伟",
-          tel: "161*****0097",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市崇明县城桥镇八一路739号"
-        },
-        {
-          name: "周伟",
-          tel: "197*****1123",
-          hobby: "钢琴、书法、唱歌",
-          address: "上海市青浦区青浦镇章浜路24号"
-        }
-      ],
-      columns: [
-        {
-          width: 60,
-          titleAlign: "center",
-          columnAlign: "center",
-          type: "selection",
-          isFrozen: true,
-          isResize: true
-        },
-        {
-          field: "name",
-          title: "股票名称",
-          width: 120,
-          titleAlign: "center",
-          columnAlign: "center",
-          isResize: true
-        },
-        {
-          field: "tel",
-          title: "最新价",
-          width: 80,
-          titleAlign: "center",
-          columnAlign: "center",
-          isResize: true
-        },
-        {
-          field: "hobby",
-          title: "涨跌",
-          width: 80,
-          titleAlign: "center",
-          columnAlign: "center",
-          isResize: true
-        },
-        {
-          field: "address",
-          title: "涨跌 %",
-          width: 80,
-          titleAlign: "center",
-          columnAlign: "left",
-          isResize: true
-        },
-        
-      ],
-      tableHeig: 0
+      currentPage: 1,
+      search: "",
+      List: new Array(20)
     };
   },
-  computed: {
-    ...mapState(["fontSize"])
-  },
-  created() {
-    this.calcTableH();
-  },
+  components: {},
   methods: {
-    calcTableH() {
-      this.tableHeig = this.$heigCalc(this.fontSize, 100);
-    },
-    customCompFunc(params) {
-      if (params.type === "delete") {
-        // do delete operation
-        this.$delete(this.tableData, params.index);
-      } else if (params.type === "edit") {
-        // do edit operation
-
-        alert(`行号：${params.index} 姓名：${params.rowData["name"]}`);
+    isRed(index) {
+      if (index % 2) {
+        return "text_red";
+      } else {
+        return "text_green";
       }
     }
   }
 };
 </script>
-<style lang='less'>
-.position {
+
+<style lang="less">
+@import "~assets/less/comm.less";
+.quickOrder {
   padding-top: 52px;
-  padding-bottom: 50px;
+  &_tips {
+    height: 30px;
+    background-color: @mainSbg;
+    color: @write;
+    font-size: 13px;
+    font-weight: bold;
+    position: relative;
+    z-index: 999;
+    line-height: 30px;
+    text-align: center;
+  }
+  &_top {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    li {
+      width: 50%;
+      height: 32px;
+      border: 1px solid @mainSbg;
+      display: flex;
+      align-items: center;
+      color: @write;
+      padding-left: 8px;
+      &.single {
+        width: 100%;
+      }
+    }
+  }
 }
 </style>

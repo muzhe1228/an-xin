@@ -6,7 +6,6 @@
       :border="false"
       left-arrow
       @click-left="onClickLeft"
-      @click-right="onClickRight"
     />
     <p class="tips">修改账户密码</p>
     <van-field v-model="userName" disabled label="交易账户" placeholder="请输入用户名"/>
