@@ -63,7 +63,7 @@ export default {
     margin-top: 40px;
     &_Btn {
       width: 80%;
-      background-color: @mainBg;
+      background-color: @lineH;
       color: @write;
       border-radius: 4px;
       border-color: @mainSbg;

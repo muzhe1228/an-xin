@@ -82,7 +82,7 @@ export default {
   display: flex;
   flex-direction: column;
   .mainWrap {
-    background-color: @mainSbg;
+    background-color: @mainBg;
     flex: 1;
     width: 100%;
     h1 {
