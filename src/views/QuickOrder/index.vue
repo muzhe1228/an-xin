@@ -33,7 +33,7 @@
         </li>
         <li>
           <p>股票名称：</p>
-          <p class="text_red">平安银行</p>
+          <p class="text_red">{{stockData.stock_name}}</p>
         </li>
         <li>
           <p>当前价格：</p>
