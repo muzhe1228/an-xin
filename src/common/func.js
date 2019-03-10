@@ -236,22 +236,47 @@ function toFixeds(nums, len) {
     return "--";
   }
 }
-function isAction(str) {
-  var reg = /[a-zA-Z0-9_]{4,10}/;
-  return reg.test(str);
+function isAction(str, err) {
+  //账号
+  var reg = /[a-zA-Z0-9_]{4,16}/;
+  let isTrue = reg.test(str);
+  if (!isTrue) {
+    return err ? err : "账号为4-14位数字，字母，下划线";
+  }
+  return false;
 }
 
-function isEmail(str) {
+function isEmail(str, err) {
+  //email
   var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
   return reg.test(str);
 }
-function isPwd(str) {
+function isPwd(str, err) {
+  //密码
   var reg = /^\w{6,20}$/;
-  return reg.test(str);
+  let isTrue = reg.test(str);
+  if (!isTrue) {
+    return err ? err : "密码为6-20位数字，字母，下划线";
+  }
+  return false;
 }
-function isCode(str) {
+function isCode(str, err) {
+  //验证码
   var reg = /^\d{6}$/;
-  return reg.test(str);
+  let isTrue = reg.test(str);
+  if (!isTrue) {
+    return err ? err : "验证码为6位数字";
+  }
+  return false;
+}
+function isBankCode(str, err) {
+  //银行卡
+  var reg = /^([1-9]{1})(\d{14}|\d{18})$/;
+  let isTrue = reg.test(str);
+  if (!isTrue) {
+    return err ? err : "银行卡号为15-19位数字";
+  }
+  return false;
 }
 function numFormat(num) {
   if (!num) return 0;

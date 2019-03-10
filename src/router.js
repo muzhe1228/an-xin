@@ -46,6 +46,15 @@ export default new Router({
       }
     },
     {
+      path: "/quick_order/:stock_code",
+      name: "QuickOrderCode",
+      components: {
+        default: () => import("./views/QuickOrder"),
+        mainheader: Header,
+        mainfooter: Footer
+      }
+    },
+    {
       path: "/position",
       name: "Position",
       components: {

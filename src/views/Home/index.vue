@@ -21,7 +21,12 @@
         <h2>操作</h2>
       </div>
       <div class="info">
-        <ul class="info_single" v-for="item in List" :key="item.stock_code">
+        <ul
+          class="info_single"
+          v-for="item in List"
+          :key="item.stock_code"
+          @click="toDetails(item.stock_code)"
+        >
           <li>
             <p>{{item.stock_name}}</p>
             <p>{{item.stock_code}}</p>
@@ -30,7 +35,7 @@
           <li :class="isRed(item.stock_del)">5.20%</li>
           <li class="text_blue">{{item.stock_del|isNormal}}</li>
           <li>0%</li>
-          <li @click="addBuyer(item.stock_code)">加入自选</li>
+          <li @click.stop="addBuyer(item.stock_code)">加入自选</li>
         </ul>
       </div>
       <div class="pageWrap" v-if="pageList.pageCount>1">
@@ -43,15 +48,6 @@
           force-ellipses
           @change="pageChange"
         />
-        <!-- <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage3"
-          :page-size="100"
-          layout="prev, pager, next, jumper"
-          :total="1000"
-        ></el-pagination>-->
-        <!-- <el-pagination layout="prev, pager, next" :total="pageList.totalCount" :page-size="20" pager-count="5"></el-pagination> -->
       </div>
     </div>
     <van-popup v-model="selectCont" position="bottom">
@@ -122,6 +118,10 @@ export default {
           this.pageList = res.stockMsg;
           // console.log(res);
         });
+    },
+    // 股票详情
+    toDetails(code) {
+      this.$router.push(`/quick_order/${code}`)
     },
     //添加自选
     addBuyer(code) {

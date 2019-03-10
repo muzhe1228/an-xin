@@ -28,7 +28,6 @@
 <script>
 import { isAction, isPwd } from "common/func";
 import { mapActions } from "vuex";
-import { debug } from "util";
 export default {
   data() {
     return {
