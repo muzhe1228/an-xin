@@ -5,6 +5,7 @@
       tableHeight="calc(100vh - 4.4rem)"
       :columns="columns"
       :tableWidth="'320'"
+      :isCol="true"
     >
       <ul class="bodyItem" v-for="(item,index) in tableData" :key="index" slot="list">
         <li v-for="(fields,i) in columns" :key="i" :style="{width:fields.width + '%'}">

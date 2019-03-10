@@ -74,7 +74,7 @@ export default {
       selectList: ["显示全部", "上海股", "深圳股"],
       req: {
         pageNo: 1,
-        pageSize: 20,
+        pageSize: 15,
         stock_type: null,
         stock_select: null
       }
@@ -180,7 +180,7 @@ export default {
     box-shadow: 0 5px 20px -5px @shadow;
     display: flex;
     align-items: center;
-    padding: 4px;
+    padding: 0 8px;
     .searchInp {
       width: 156px;
       height: 28px;
@@ -211,17 +211,17 @@ export default {
       top: 100px;
       left: 0;
       display: flex;
-      height: 50px;
+      height: 40px;
       align-items: center;
-      background-color: @mainSbg;
+      background-color: @mainBg;
       color: @write;
-      border-left: 2px solid @mainSbg;
+      border-left: 2px solid @mainBg;
       h2 {
         text-align: center;
         font-weight: 400;
         font-size: 11px;
         width: 13%;
-        border-right: 2px solid @mainSbg;
+        border-right: 2px solid @mainBg;
         &:first-child {
           width: 20%;
         }
@@ -236,20 +236,20 @@ export default {
     }
 
     .info {
-      padding-top: 150px;
+      padding-top: 140px;
       &_single {
         height: 50px;
         width: 100%;
         display: flex;
         align-items: center;
-        background-color: @mainSbg;
+        background-color: @mainBg;
         color: @write;
-        border-left: 2px solid @mainSbg;
+        border-left: 2px solid @mainBg;
         &:nth-child(odd) {
-          background-color: @mainBg;
+          background-color: @mainSbg;
         }
         li {
-          border-right: 2px solid @mainSbg;
+          border-right: 2px solid @mainBg;
           text-align: center;
           font-weight: 400;
           width: 13%;
@@ -286,10 +286,10 @@ export default {
       .van-pagination {
         &__item {
           color: @write;
-          background-color: @mainSbg;
+          background-color: @mainBg;
         }
         &__item--active {
-          background-color: @mainBg;
+          background-color: @mainSbg;
         }
         &__item--disabled,
         &__item--disabled:active {

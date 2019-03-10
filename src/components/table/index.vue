@@ -1,11 +1,13 @@
 <template>
   <div class="table" :style="{height:tableHeight}">
     <div
+      v-if="isCol"
       class="title_l"
       :class="isActive?'active':''"
       :style="{width:(columns[0].width*tableWidth/100) +'%'}"
     >{{columns[0].title}}</div>
     <div
+      v-if="isCol"
       class="l_Shade"
       :class="isActive?'active':''"
       :style="{width:(columns[0].width*tableWidth/100)+'%'}"
@@ -62,6 +64,10 @@ export default {
     tableHeight: {
       type: String,
       default: "500px"
+    },
+    isCol: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -95,6 +101,7 @@ export default {
       console.log(pageSize);
     },
     changeScroll(el) {
+      if (!this.isCol) return;
       let top = el.scrollTop,
         left = el.scrollLeft;
       this.$refs.tableHead.style.transform = "translateX(" + -left + "px)";
@@ -130,8 +137,8 @@ export default {
         text-align: center;
         height: 50px;
         line-height: 50px;
-        border-left: 1px solid @mainSbg;
-        border-bottom: 1px solid @mainSbg;
+        border-left: 1px solid @mainBg;
+        border-bottom: 1px solid @mainBg;
       }
     }
   }

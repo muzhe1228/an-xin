@@ -37,14 +37,15 @@ export default {
       }
     };
   },
+
   components: {},
   methods: {
     login() {
       const { buyerLoginName, buyerLoginPwd } = this.loginData;
-      if (!isAction(buyerLoginName)) {
-        this.$toast.fail("账号不能为空");
-      } else if (!isPwd(buyerLoginPwd)) {
-        this.$toast.fail("密码不能为空");
+      if (isAction(buyerLoginName)) {
+        this.$toast.fail(isAction(buyerLoginName));
+      } else if (isPwd(buyerLoginPwd)) {
+        this.$toast.fail(isPwd(buyerLoginPwd));
       } else {
         this.$http
           .post({

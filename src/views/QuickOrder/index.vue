@@ -17,7 +17,7 @@
       <ul class="quickOrder_left">
         <li>
           <p>交易账户：</p>
-          <p>xt987541</p>
+          <p>{{userInfo.buyerLoginName}}</p>
         </li>
         <li>
           <p>可用余额：</p>
@@ -28,7 +28,13 @@
         <li class="single">
           <p>股票代码：</p>
           <p>
-            <input class="code" type="text" v-model="stockData.stock_code" disabled placeholder="股票代码">
+            <input
+              class="code"
+              type="text"
+              v-model="stockData.stock_code"
+              disabled
+              placeholder="股票代码"
+            >
           </p>
         </li>
         <li>
@@ -121,45 +127,81 @@
     </div>
     <div class="quickOrder_hanle">
       <van-button class="buyBtn" disabled>买入</van-button>
-      <van-button class="Refresh" disabled>刷新</van-button>
+      <van-button class="Refresh" :disabled="false" @click="_initPage">刷新</van-button>
+    </div>
+    <div class="kLine">
+      <div class="selectBtn">
+        <van-button @click="selectLine('min')" :class="checkLine=='min'&&'active'">分K线</van-button>
+        <van-button @click="selectLine('day')" :class="checkLine=='day'&&'active'">天K线</van-button>
+        <van-button @click="selectLine('week')" :class="checkLine=='week'&&'active'">周K线</van-button>
+        <van-button @click="selectLine('month')" :class="checkLine=='month'&&'active'">月K线</van-button>
+      </div>
+      <img :src="kLineUrl" alt>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      upDown: "0",
-      stockData: {}
+      upDown: null,
+      stockData: {},
+      checkLine: null,
+      kLineUrl: null,
+      inRefresh: false
     };
   },
   components: {},
   mounted() {
     this._initPage();
   },
+  computed: {
+    ...mapState(["userInfo"])
+  },
   methods: {
     _initPage() {
-      console.log(this.$route.params.stock_code);
+      this.upDown = "0";
+      this.inRefresh = true;
+      this.checkLine = "min";
       this.getDetails(this.$route.params.stock_code);
+      this.setTableVal(2);
+    },
+    selectLine(val) {
+      this.checkLine = val;
+      switch (val) {
+        case "min":
+          this.kLineUrl = this.stockData.stock_min_link;
+          break;
+        case "day":
+          this.kLineUrl = this.stockData.stock_day_link;
+          break;
+        case "week":
+          this.kLineUrl = this.stockData.stock_week_link;
+          break;
+        case "month":
+          this.kLineUrl = this.stockData.stock_month_link;
+          break;
+        default:
+          break;
+      }
     },
     getDetails(code) {
-      this.$http
-        .get({
-          url: "/stock/getStockDetail",
-          data: { stock_code: code }
-        })
-        .then(res => {
-          
-          if (res.stockMsg) {
-            this.stockData = res.stockMsg;
-          }
-          console.log(res.stockMsg);
-          // res.buyerStockList.forEach(item => {
-          //   item.check = false;
-          // });
-          // this.buyerStockList = res.buyerStockList;
-        });
+      if (code) {
+        this.$http
+          .get({
+            url: "/stock/getStockDetail",
+            data: { stock_code: code }
+          })
+          .then(res => {
+            if (res.stockMsg) {
+              this.stockData = res.stockMsg;
+              this.kLineUrl = this.stockData.stock_min_link;
+              this.inRefresh = false;
+            }
+          });
+      }
     },
     isRed(index) {
       if (index % 2) {
@@ -167,7 +209,8 @@ export default {
       } else {
         return "text_green";
       }
-    }
+    },
+    ...mapMutations({ setTableVal: "SET_TABBARVAL" })
   }
 };
 </script>
@@ -175,8 +218,7 @@ export default {
 <style lang="less">
 @import "~assets/less/comm.less";
 .quickOrder {
-  padding-top: 52px;
-
+  padding: 52px 0 60px 0;
   &_tips {
     height: 30px;
     background-color: @mainBg;
@@ -357,6 +399,29 @@ export default {
       background-color: @red;
       border-color: @red;
       color: @write;
+    }
+  }
+  .kLine {
+    width: 100%;
+    .selectBtn {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 5%;
+      .van-button {
+        width: 20%;
+        height: 24px;
+        line-height: 22px;
+        font-size: 11px;
+        background: linear-gradient(#fff, #98a1ac);
+        border: none;
+        border-radius: 4px;
+        &.active {
+          background: linear-gradient(@blue);
+        }
+      }
+    }
+    img {
+      width: 100%;
     }
   }
 }

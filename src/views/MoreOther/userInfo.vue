@@ -5,28 +5,28 @@
     <ul class="userInfo_info">
       <li>
         <p>姓名：</p>
-        <p>廉亚龙</p>
+        <p>{{userInfo.buyerName}}</p>
       </li>
       <li>
         <p>交易账户：</p>
-        <p>Ken2018</p>
+        <p>{{userInfo.buyerLoginName}}</p>
       </li>
       <li>
         <p>银行名称：</p>
-        <p>招商银行</p>
+        <p>{{userInfo.recordBank}}</p>
       </li>
 
       <li class="single">
         <p>银行卡号：</p>
-        <p>6221885061021384768</p>
+        <p>{{userInfo.recordBankCard}}</p>
       </li>
       <li>
         <p>手机号：</p>
-        <p>17620800222</p>
+        <p>{{userInfo.buyerPhone}}</p>
       </li>
       <li class="single">
         <p>身份证号：</p>
-        <p>411421199512107218</p>
+        <p>{{userInfo.certificateCard}}</p>
       </li>
       <li>
         <p>保证金：</p>
@@ -65,9 +65,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {};
+  },
+  computed: {
+    ...mapState(["userInfo"])
   },
   components: {},
   methods: {

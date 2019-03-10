@@ -6,7 +6,7 @@
     <van-cell title="系统规则" is-link to="/system_rule"/>
     <van-cell title="系统公告" is-link to="/system_notice"/>
     <div class="loginOut">
-      <van-button class="loginOut_Btn" click="loginOut">退出登录</van-button>
+      <van-button class="loginOut_Btn" @click="loginOut">退出登录</van-button>
     </div>
   </div>
 </template>
@@ -23,6 +23,7 @@ export default {
     },
     loginOut() {
       this.$toast.fail("退出登录");
+      this.$router.push('/login')
     }
   }
 };

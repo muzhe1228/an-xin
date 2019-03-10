@@ -82,7 +82,7 @@ export default {
   display: flex;
   flex-direction: column;
   .mainWrap {
-    background-color: @mainSbg;
+    background-color: @mainBg;
     flex: 1;
     width: 100%;
     h1 {
@@ -90,14 +90,14 @@ export default {
       color: palevioletred;
     }
   }
-  .transitionRouter-enter-active,
-  .transitionRouter-leave-active {
-    transition: all 0.4s;
-  }
+  // .transitionRouter-enter-active,
+  // .transitionRouter-leave-active {
+  //   transition: all 0.4s;
+  // }
 
-  .transitionRouter-enter,
-  .transitionRouter-leave {
-    opacity: 0;
-  }
+  // .transitionRouter-enter,
+  // .transitionRouter-leave {
+  //   transform: translateX(-100%);
+  // }
 }
 </style>

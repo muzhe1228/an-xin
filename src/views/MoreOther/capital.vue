@@ -4,6 +4,10 @@
 
     <ul class="capital">
       <li>
+        <p>交易账户</p>
+        <p>{{userInfo.buyerLoginName}}</p>
+      </li>
+      <li>
         <p>保证金</p>
         <p>1,024,813.03</p>
       </li>
@@ -36,9 +40,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {};
+  },
+  computed: {
+    ...mapState(["userInfo"])
   },
   components: {},
   methods: {
